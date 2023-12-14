@@ -17,6 +17,7 @@ const ProductPage = (props) => {
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const getProductById = (id) => {
+    console.log(loading);
     const productId = { _id: id };
     productCallApi("byId/", "put", productId)
       .then((res) => {

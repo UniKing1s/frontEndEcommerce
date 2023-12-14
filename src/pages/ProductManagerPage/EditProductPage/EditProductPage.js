@@ -70,7 +70,7 @@ const EditProductPage = () => {
         });
     };
     getData();
-  }, []);
+  });
   // if (loading) {
   //   loadProduct();
   // }
@@ -119,9 +119,10 @@ const EditProductPage = () => {
       decribtion: data.decribtion,
       status: data.status,
     };
+
     if (data.name !== "" || data.img !== "") {
       if (changeImg.current === true) {
-        const imgName = await productCallApi("uploadImage/", "post", formData)
+        await productCallApi("uploadImage/", "post", formData)
           .then(async (respo) => {
             if (respo.status === 200) {
               console.log(respo.data.filename);
@@ -252,11 +253,16 @@ const EditProductPage = () => {
                 }
               >
                 <option>Choose...</option>
-                <option value="1">Bia, nước</option>
-                <option value="2">Rau củ</option>
-                <option value="3">Điện tử</option>
-                <option value="4">Mỹ phẩm</option>
-                <option value="5">Thịt</option>
+                <option value="1">SAMSUNG</option>
+                <option value="2">iPhone</option>
+                <option value="3">OPPO</option>
+                <option value="4">XIAOMI</option>
+                <option value="5">VIVO</option>
+                <option value="6">realme</option>
+                <option value="7">Nokia</option>
+                <option value="8">mobell</option>
+                <option value="9">itel</option>
+                <option value="10">Masstel</option>
               </select>
             </div>
             <div className="form-floating mb-3">

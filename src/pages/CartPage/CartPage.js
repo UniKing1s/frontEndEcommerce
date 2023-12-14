@@ -1,17 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import CartItem from "../../components/cartItem/cartItem";
 import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { deleteCart, updateCart } from "../../redux/cartSlice";
+import { useHistory } from "react-router-dom";
 
 const CartPage = () => {
   const carts = useSelector((state) => state.cart);
+  const accountLoged = useSelector((state) => state.account.logged);
+  const totalBill = useRef(0);
+  const navi = useHistory();
+  useEffect(() => {
+    return () => {
+      totalBill.current = 0;
+    };
+  }, [carts]);
+  if (carts.length > 0) {
+    carts.forEach(
+      (e) =>
+        (totalBill.current = Number(totalBill.current) + Number(e.totalPrice))
+    );
+  }
   console.log(carts);
   localStorage.setItem(
     "cart",
     JSON.stringify(useSelector((state) => state.cart))
   );
+  const submitDatHang = () => {
+    if (totalBill.current > 0) {
+      if (accountLoged) {
+        navi.push("/thanhToan");
+      } else {
+        navi.push("/login");
+      }
+    } else {
+      toast.warning("Bạn hiện tại không có sản phẩm để thanh toán");
+    }
+  };
   const ditpatch = useDispatch();
   const onDelete = (cart) => {
     ditpatch(deleteCart(cart));
@@ -80,6 +106,21 @@ const CartPage = () => {
 
               {/* <ProductList products={products} onDelete={this.onDelete} /> */}
             </div>
+          </div>
+          <div className="form-floating mb-3">
+            <button
+              className="btn btn-primary mt-10 m-a"
+              style={{ textAlign: "center", width: "100%" }}
+              onClick={() => submitDatHang()}
+            >
+              <strong>
+                Đặt hàng{" "}
+                {new Intl.NumberFormat("vi", {
+                  currency: "VND",
+                  style: "currency",
+                }).format(totalBill.current)}
+              </strong>
+            </button>
           </div>
         </div>
       </div>

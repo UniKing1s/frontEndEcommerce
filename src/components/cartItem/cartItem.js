@@ -1,8 +1,8 @@
 import React from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import { imgAPI_URL } from "../../constants/Config";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 const CartItem = (props) => {
   localStorage.setItem(
     "cart",

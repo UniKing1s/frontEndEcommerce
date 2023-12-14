@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
 import CartPage from "./pages/CartPage/CartPage";
 import EditProductPage from "./pages/ProductManagerPage/EditProductPage/EditProductPage";
+import ThanhToanPage from "./pages/ThanhToanPage/thanhToanPage";
 
 const update = true;
 const routes = [
@@ -51,6 +52,11 @@ const routes = [
     path: "/cart",
     exact: false,
     main: () => <CartPage />,
+  },
+  {
+    path: "/thanhToan",
+    exact: false,
+    main: () => <ThanhToanPage />,
   },
   {
     path: "*",

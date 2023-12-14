@@ -54,28 +54,52 @@ class AddProductPage extends Component {
       [name]: value,
     });
   };
+  checkSpacing = (input) => {
+    const inputArray = Array.from(input);
+    const InputLength = inputArray.length;
+    let i = 0;
+    inputArray.forEach((e) => {
+      if (e === " ") {
+        i = Number(i) + 1;
+      }
+    });
+    if (i >= InputLength) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   onSave = async () => {
     // const formData = new FormData();
-    console.log(this.formData);
-    if (this.state.name !== "") {
-      productCallApi("uploadImage/", "post", this.formData)
-        .then((res) => {
-          if (res.status === 200) {
-            this.state["img"] = res.data.filename;
-            productCallApi("", "post", this.state)
-              .then((res) => {
-                console.log(res);
-                if (res.status === 200) {
-                  toast.success("Thêm sản phẩm thành công");
-                  window.location.href = "listProduct";
-                }
-              })
-              .catch((err) => {
-                toast.error("Upload Lỗi");
-              });
-          }
-        })
-        .catch((err) => {});
+    console.log(this.checkSpacing(this.state.name));
+    if (this.checkSpacing(this.state.name)) {
+      toast.error("Tên sản phẩm không hợp lệ");
+    } else {
+      if (this.img === null) {
+        toast.error("Chưa có file ảnh");
+      } else {
+        console.log(this.formData);
+        if (this.state.name !== "") {
+          productCallApi("uploadImage/", "post", this.formData)
+            .then((res) => {
+              if (res.status === 200) {
+                this.state["img"] = res.data.filename;
+                productCallApi("", "post", this.state)
+                  .then((res) => {
+                    console.log(res);
+                    if (res.status === 200) {
+                      toast.success("Thêm sản phẩm thành công");
+                      window.location.href = "listProduct";
+                    }
+                  })
+                  .catch((err) => {
+                    toast.error("Upload Lỗi");
+                  });
+              }
+            })
+            .catch((err) => {});
+        }
+      }
     }
   };
   // imageBase64 = (file) => {
@@ -170,11 +194,16 @@ class AddProductPage extends Component {
                     onChange={this.onChange}
                   >
                     <option>Choose...</option>
-                    <option value="1">Bia, nước</option>
-                    <option value="2">Rau củ</option>
-                    <option value="3">Điện tử</option>
-                    <option value="4">Mỹ phẩm</option>
-                    <option value="5">Thịt</option>
+                    <option value="1">SAMSUNG</option>
+                    <option value="2">iPhone</option>
+                    <option value="3">OPPO</option>
+                    <option value="4">XIAOMI</option>
+                    <option value="5">VIVO</option>
+                    <option value="6">realme</option>
+                    <option value="7">Nokia</option>
+                    <option value="8">mobell</option>
+                    <option value="9">itel</option>
+                    <option value="10">Masstel</option>
                   </select>
                 </div>
                 <div className="form-floating mb-3">

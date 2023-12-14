@@ -6,8 +6,8 @@ import { NavLink } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import productCallApi, { imageDeleteCallApi } from "../../../utils/apiCaller";
-import GetAccountRole from "../../../service/getAccountRole";
-import SendToLink from "../../../service/sendToLink";
+// import GetAccountRole from "../../../service/getAccountRole";
+// import SendToLink from "../../../service/sendToLink";
 
 class ListProduct extends Component {
   constructor(props) {

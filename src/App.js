@@ -49,30 +49,33 @@ const App = () => {
     }
     return <Switch>{result}</Switch>;
   };
-const [screenHeight, setScreenHeight] = useState();
+  const [screenHeight, setScreenHeight] = useState();
   useEffect(() => {
     return () => {
       setScreenHeight(window.innerHeight);
     };
-  }, [window.innerHeight]);
+  }, []);
   return (
     <>
       <Router>
         <Header />
-          <main>
-            <div className="App" style={{
-                  top: "0",
-                  right: "0",
-                  bottom: "0",
-                  left: "0",
-                  minHeight: "100vh",
-                  height: { screenHeight } + "px",
-                  position: "relative",
-                }}>
-              {/* <ListProduct /> */}
-              {showContentMenus(routes)}
-            </div>
-          </main>
+        <main>
+          <div
+            className="App"
+            style={{
+              top: "0",
+              right: "0",
+              bottom: "0",
+              left: "0",
+              minHeight: "100vh",
+              height: { screenHeight } + "px",
+              position: "relative",
+            }}
+          >
+            {/* <ListProduct /> */}
+            {showContentMenus(routes)}
+          </div>
+        </main>
       </Router>
       {/* <AddProductPage />; */}
     </>
