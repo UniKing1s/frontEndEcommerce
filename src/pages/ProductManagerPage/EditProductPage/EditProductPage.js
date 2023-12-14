@@ -188,6 +188,9 @@ const EditProductPage = () => {
           toast.error("Lỗi update ");
         });
     }
+    if (checkSpacing(data.name)) {
+      toast.error("Thông tin tên sản phẩm trống");
+    }
   };
   return (
     <>
