@@ -11,10 +11,12 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [showPass, setShowPass] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navi = useHistory();
-  const register = () => {
+  const register = async () => {
     if (password.length > 5 && userName.length > 5 && rePassword === password) {
-      accountsCallApi("", "post", {
+      setLoading(true);
+      await accountsCallApi("", "post", {
         username: userName,
         password: password,
       })
@@ -29,21 +31,24 @@ const RegisterPage = () => {
           //   toast.warning("Tên đăng nhập đã tồn tại");
           // }
         })
-        .catch((error) => {
-          accountsCallApi("getByUsser/", "post", {
+        .catch(async (error) => {
+          await accountsCallApi("getByUsser/", "post", {
             username: userName,
           })
             .then((res) => {
               if (res.status === 200) {
-                toast.warning("Tài khoản đã tồn tại");
+                toast.error("Tài khoản đã tồn tại");
               }
               // if (res.status === 201) {
               //   toast.warning("Tên đăng nhập đã tồn tại");
               // }
             })
             .catch((error) => {
-              toast.error("Đăng ký không thành công");
+              toast.error("Đăng ký thất bại");
             });
+        })
+        .finally(() => {
+          setLoading(false);
         });
     } else {
       toast.error("Đăng ký không thành công");
@@ -199,14 +204,23 @@ const RegisterPage = () => {
                   </label>
                   <br></br>
                   <div className="form-floating mb-3">
-                    {rePassword.length > 5 &&
-                    userName.length > 5 &&
-                    rePassword === password ? (
+                    {loading ? (
+                      <button
+                        type="button"
+                        className="btn btn-primary w-100"
+                        disabled
+                        id="register1"
+                      >
+                        loading
+                      </button>
+                    ) : rePassword.length > 5 &&
+                      userName.length > 5 &&
+                      rePassword === password ? (
                       <button
                         type="button"
                         className="btn btn-primary w-100"
                         onClick={() => register()}
-                        id="register"
+                        id="register2"
                       >
                         Đăng Ký
                       </button>
@@ -215,9 +229,9 @@ const RegisterPage = () => {
                         type="button"
                         className="btn btn-primary w-100"
                         disabled
-                        id="register"
+                        id="register1"
                       >
-                        Đăng Ký
+                        Thông tin chưa hợp lệ
                       </button>
                     )}
                   </div>
