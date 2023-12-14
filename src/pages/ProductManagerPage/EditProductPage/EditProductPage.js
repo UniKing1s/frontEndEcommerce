@@ -96,6 +96,21 @@ const EditProductPage = () => {
     }
     // console.log(formData);
   };
+  const checkSpacing = (input) => {
+    const inputArray = Array.from(input);
+    const InputLength = inputArray.length;
+    let i = 0;
+    inputArray.forEach((e) => {
+      if (e === " ") {
+        i = Number(i) + 1;
+      }
+    });
+    if (i >= InputLength) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   // const handleChangeImgInput = (event) => {
   //   setImg(event.target.value);
   // };
@@ -120,17 +135,20 @@ const EditProductPage = () => {
       status: data.status,
     };
 
-    if (data.name !== "" || data.img !== "") {
+    if (!checkSpacing(data.name) && !checkSpacing(data.img)) {
       if (changeImg.current === true) {
         await productCallApi("uploadImage/", "post", formData)
           .then(async (respo) => {
             if (respo.status === 200) {
               console.log(respo.data.filename);
               console.log(data);
+              setOldImg(respo.data.filename);
               const imgNew = {
                 masp: data.masp,
                 img: respo.data.filename,
               };
+              setData(Object.assign({}, data, { img: respo.data.filename }));
+
               await productCallApi("update/", "post", imgNew)
                 .then((res) => {
                   console.log(res.data);
@@ -151,9 +169,8 @@ const EditProductPage = () => {
                 .catch((er) => {
                   toast.error("lỗi xóa file");
                 });
-
               // setData(Object.assign({}, data, { img: respo.data.filename }));
-              return respo.data.filename;
+              // return respo.data.filename;
             }
           })
           .catch((er) => {
