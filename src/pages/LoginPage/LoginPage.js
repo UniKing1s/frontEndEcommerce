@@ -48,7 +48,18 @@ const LoginPage = () => {
           }
         })
         .catch((err) => {
-          toast.error("Không tìm thấy tài khoản đăng nhập");
+          accountsCallApi("getByUsser/", "post", {
+            username: username,
+          })
+            .then((res) => {
+              if (res.status === 200) {
+                toast.error("Sai thông tin mật khẩu");
+              }
+            })
+            .catch((err) => {
+              toast.error("Không tìm thấy tài khoản đăng nhập");
+            });
+          // toast.error("Không tìm thấy tài khoản đăng nhập");
         });
     }
     setTimeout(() => {
