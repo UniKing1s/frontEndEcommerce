@@ -7,6 +7,7 @@
 export const productsAPI_URL = "https://back-end-ecomercy.vercel.app/products";
 export const accountsAPI_URL = "https://back-end-ecomercy.vercel.app/accounts";
 export const imgAPI_URL = "https://back-end-ecomercy.vercel.app/images/";
+export const deleteImage_URL = "https://back-end-ecomercy.vercel.app";
 
 // export const productsAPI_URL = "https://ruby-stormy-blackbuck.cyclic.app/products";
 // export const accountsAPI_URL = "https://ruby-stormy-blackbuck.cyclic.app/accounts";
