@@ -4,7 +4,7 @@
 // export const imgAPI_URL = "http://localhost:5000/images/";
 // export const deleteImage_URL = "http://localhost:5000";
 
-export const productsAPI_URL = "https://back-end-ecomercy.vercel.app/products";
-export const accountsAPI_URL = "https://back-end-ecomercy.vercel.app/accounts";
-export const imgAPI_URL = "https://back-end-ecomercy.vercel.app/images/";
-export const deleteImage_URL = "https://back-end-ecomercy.vercel.app";
+export const productsAPI_URL = "https://back-end-ecomercy-git-main-uniking1s.vercel.app/products";
+export const accountsAPI_URL = "https://back-end-ecomercy-git-main-uniking1s.vercel.app/accounts";
+export const imgAPI_URL = "https://back-end-ecomercy-git-main-uniking1s.vercel.app/images/";
+export const deleteImage_URL = "https://back-end-ecomercy-git-main-uniking1s.vercel.app";
