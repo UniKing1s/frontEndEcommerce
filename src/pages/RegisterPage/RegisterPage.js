@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./RegisterPage.scss";
 import { NavLink, useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import CheckLogin from "../../service/checkLogin";
 import { accountsCallApi } from "../../utils/apiCaller";
