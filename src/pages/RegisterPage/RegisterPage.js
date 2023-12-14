@@ -13,7 +13,7 @@ const RegisterPage = () => {
   const [showPass, setShowPass] = useState(false);
   const navi = useHistory();
   const register = () => {
-    if (password.length > 5 && userName.length > 5) {
+    if (password.length > 5 && userName.length > 5 && rePassword === password) {
       accountsCallApi("", "post", {
         username: userName,
         password: password,
@@ -25,15 +25,28 @@ const RegisterPage = () => {
               navi.push("/login");
             }, 2000);
           }
-          if (res.status === 201) {
-            toast.warning("Tên đăng nhập đã tồn tại");
-          }
+          // if (res.status === 201) {
+          //   toast.warning("Tên đăng nhập đã tồn tại");
+          // }
         })
         .catch((error) => {
-          toast.warning("Đăng ký không thành công");
+          accountsCallApi("getByUsser/", "post", {
+            username: userName,
+          })
+            .then((res) => {
+              if (res.status === 200) {
+                toast.warning("Tài khoản đã tồn tại");
+              }
+              // if (res.status === 201) {
+              //   toast.warning("Tên đăng nhập đã tồn tại");
+              // }
+            })
+            .catch((error) => {
+              toast.error("Đăng ký không thành công");
+            });
         });
     } else {
-      toast.warning("Đăng ký không thành công");
+      toast.error("Đăng ký không thành công");
     }
   };
   const [checkU, setCheckU] = useState(true);
@@ -186,14 +199,27 @@ const RegisterPage = () => {
                   </label>
                   <br></br>
                   <div className="form-floating mb-3">
-                    <button
-                      type="button"
-                      className="btn btn-primary w-100"
-                      onClick={() => register()}
-                      id="register"
-                    >
-                      Đăng Ký
-                    </button>
+                    {rePassword.length > 5 &&
+                    userName.length > 5 &&
+                    rePassword === password ? (
+                      <button
+                        type="button"
+                        className="btn btn-primary w-100"
+                        onClick={() => register()}
+                        id="register"
+                      >
+                        Đăng Ký
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="btn btn-primary w-100"
+                        disabled
+                        id="register"
+                      >
+                        Đăng Ký
+                      </button>
+                    )}
                   </div>
                   <div className="form-floating mb-3">
                     <NavLink
