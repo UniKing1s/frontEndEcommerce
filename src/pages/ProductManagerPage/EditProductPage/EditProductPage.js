@@ -70,7 +70,7 @@ const EditProductPage = () => {
         });
     };
     getData();
-  });
+  }, []);
   // if (loading) {
   //   loadProduct();
   // }

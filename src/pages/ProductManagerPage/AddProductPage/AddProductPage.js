@@ -148,6 +148,7 @@ class AddProductPage extends Component {
                     id="floatingInput"
                     placeholder="Số lượng"
                     name="quantity"
+                    min={0}
                     value={this.state.quantity}
                     onChange={this.onChange}
                   />
@@ -160,6 +161,7 @@ class AddProductPage extends Component {
                     id="floatingInput"
                     placeholder="Giá trị"
                     name="price"
+                    min={0}
                     value={this.state.price}
                     onChange={this.onChange}
                   />
