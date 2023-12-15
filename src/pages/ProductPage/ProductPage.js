@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { updateCart } from "../../redux/cartSlice";
 import SaveCartItem from "../../service/SaveCartItem";
 import { imgAPI_URL } from "../../constants/Config";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 // import ButtonAddToCart from "../../components/buttonAddToCart/buttonAddToCart";
 
 const ProductPage = (props) => {
@@ -17,7 +17,7 @@ const ProductPage = (props) => {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
-  const navi = useHistory();
+  // const navi = useHistory();
   const getProductById = (id) => {
     console.log(loading);
     const productId = { _id: id };
