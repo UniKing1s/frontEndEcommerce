@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import CartItem from "../../components/cartItem/cartItem";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import { deleteCart, updateCart } from "../../redux/cartSlice";
 import { useHistory } from "react-router-dom";
 
 const CartPage = () => {
+  // const [totalBill, setBills] = useState(0);
   const carts = useSelector((state) => state.cart);
   const accountLoged = useSelector((state) => state.account.logged);
   const totalBill = useRef(0);
@@ -14,9 +15,20 @@ const CartPage = () => {
   useEffect(() => {
     return () => {
       totalBill.current = 0;
+      if (carts.length > 0) {
+        totalBill.current = 0;
+
+        // carts.forEach(
+        //   (e) =>
+        //     (totalBill.current =
+        //       Number(totalBill.current) + Number(e.totalPrice))
+        // );
+      }
     };
   }, [carts]);
   if (carts.length > 0) {
+    totalBill.current = 0;
+    // setBills(0);
     carts.forEach(
       (e) =>
         (totalBill.current = Number(totalBill.current) + Number(e.totalPrice))
@@ -27,23 +39,32 @@ const CartPage = () => {
     "cart",
     JSON.stringify(useSelector((state) => state.cart))
   );
+  const checkCartToPay = () => {
+    let value = 0;
+    carts.forEach((e) => (value = value + e.quantity));
+    if (value > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   const submitDatHang = () => {
-    if (totalBill.current > 0) {
+    if (checkCartToPay()) {
       if (accountLoged) {
         navi.push("/thanhToan");
       } else {
         navi.push("/login");
       }
     } else {
-      toast.warning("Bạn hiện tại không có sản phẩm để thanh toán");
+      toast.error("Bạn hiện tại không có sản phẩm để thanh toán");
     }
   };
   const ditpatch = useDispatch();
   const onDelete = (cart) => {
     ditpatch(deleteCart(cart));
-    // setLocalItem();
   };
   const increaseQuantity = (carts) => {
+    totalBill.current = 1;
     ditpatch(updateCart(carts));
   };
   const decreaseQuantity = (carts) => {

@@ -39,23 +39,34 @@ const ProductPage = (props) => {
       });
   };
   const addToCart = () => {
-    const cart = {
-      masp: product.current.masp,
-      name: product.current.name,
-      price: product.current.price,
-      sale: product.current.sale,
-      img: product.current.img,
-      quantity: Number(quantity),
-      totalPrice:
-        Number(product.current.price) * (1 - product.current.sale / 100),
-    };
-    dispatch(updateCart(cart));
-    toast.success("Thêm vào giỏ hàng thành công");
+    if (Number(quantity) >= 1) {
+      const cart = {
+        masp: product.current.masp,
+        name: product.current.name,
+        price: product.current.price,
+        sale: product.current.sale,
+        img: product.current.img,
+        quantity: Number(quantity) >= 1 ? Number(quantity) : 1,
+        totalPrice:
+          Number(product.current.price) * (1 - product.current.sale / 100),
+      };
+      dispatch(updateCart(cart));
+      toast.success("Thêm vào giỏ hàng thành công");
+    } else {
+      toast.warning("Số lượng nhỏ hơn 1 không thể thêm vào giỏ hàng");
+    }
   };
   useEffect(() => {
     getProductById(param.id);
   });
-
+  const decrease = () => {
+    if (quantity >= 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+  const increase = () => {
+    setQuantity(quantity + 1);
+  };
   return (
     <div key={props.index}>
       <ToastContainer />
@@ -128,7 +139,29 @@ const ProductPage = (props) => {
                     </div>
                     <p className="lead">{product.current.decribtion}</p>
                     <div className="d-flex">
-                      <input
+                      <button
+                        className="btn btn-dark flex-shrink-0"
+                        style={{ margin: "3px" }}
+                        type="button"
+                        onClick={() => decrease()}
+                      >
+                        -
+                      </button>
+                      <button
+                        className="btn btn-primary flex-shrink-0"
+                        type="button"
+                      >
+                        {quantity}
+                      </button>
+                      <button
+                        className="btn btn-dark flex-shrink-0"
+                        type="button"
+                        style={{ margin: "3px" }}
+                        onClick={() => increase()}
+                      >
+                        +
+                      </button>
+                      {/* <input
                         className="form-control text-center me-3"
                         id="inputQuantity"
                         type="number"
@@ -136,7 +169,7 @@ const ProductPage = (props) => {
                         min={1}
                         style={{ width: "5rem" }}
                         onChange={(e) => setQuantity(e.target.value)}
-                      />
+                      /> */}
                       <button
                         className="btn btn-outline-dark flex-shrink-0"
                         type="button"
