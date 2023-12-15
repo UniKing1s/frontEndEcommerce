@@ -9,6 +9,7 @@ import ProductPage from "./pages/ProductPage/ProductPage";
 import CartPage from "./pages/CartPage/CartPage";
 import EditProductPage from "./pages/ProductManagerPage/EditProductPage/EditProductPage";
 import ThanhToanPage from "./pages/ThanhToanPage/thanhToanPage";
+import SearchPage from "./pages/SearchPage/SearchPage";
 
 const update = true;
 const routes = [
@@ -57,6 +58,11 @@ const routes = [
     path: "/thanhToan",
     exact: false,
     main: () => <ThanhToanPage />,
+  },
+  {
+    path: "/search/:name",
+    exact: false,
+    main: () => <SearchPage />,
   },
   {
     path: "*",

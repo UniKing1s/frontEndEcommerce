@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateAccount } from "../../redux/accountSlice";
+import { ToastContainer, toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+
 // username = connect((state) => state.user.account.username);
 // handleRegisterButton = () => {
 //   return (window.location.href = "/register");
 // };
 const Header = () => {
+  const searchText = useRef();
+  const navi = useHistory();
   const dispatch = useDispatch();
   const account = useSelector((state) => state.account);
   const cart = useSelector((state) => state.cart);
@@ -15,7 +20,41 @@ const Header = () => {
     localStorage.removeItem("_token");
     dispatch(updateAccount(account));
   };
-  // console.log(account);
+  const chekKeyDown = (e) => {
+    e.preventDefault();
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+      searchSubmit();
+    }
+  };
+  const checkSpacing = (input) => {
+    const inputArray = Array.from(input);
+    const InputLength = inputArray.length;
+    let i = 0;
+    inputArray.forEach((e) => {
+      if (e === " ") {
+        i = Number(i) + 1;
+      }
+    });
+    if (i >= InputLength) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const searchSubmit = () => {
+    if (searchText.current) {
+      if (!checkSpacing(searchText.current)) {
+        navi.push("/search/" + searchText.current);
+      }
+    }
+  };
+  const setSearchText = (e) => {
+    searchText.current = e.target.value;
+    console.log(e.target.value);
+  };
+  console.log(account);
   return (
     <div>
       <>
@@ -106,19 +145,22 @@ const Header = () => {
                 )}
               </ul>
 
-              <form className="d-flex my-2 my-lg-0">
+              <div className="d-flex my-2 my-lg-0">
                 <input
                   className="form-control me-sm-2"
                   type="text"
                   placeholder="Search"
+                  value={searchText.current}
+                  onChange={(e) => setSearchText(e)}
+                  onKeyUp={(e) => chekKeyDown(e)}
                 />
                 <button
                   className="btn btn-success my-2 my-sm-0 mr-10"
-                  type="submit"
+                  onClick={() => searchSubmit()}
                 >
                   Search
                 </button>
-              </form>
+              </div>
               <NavLink
                 type="button"
                 className="btn btn-info position-relative mr-10"
