@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import CartItem from "../../components/cartItem/cartItem";
 import { useSelector, useDispatch } from "react-redux";
@@ -47,6 +47,11 @@ const CartPage = () => {
     } else {
       return false;
     }
+  };
+  const showTotal = () => {
+    let value = 0;
+    carts.forEach((e) => (value = value + e.totalPrice));
+    return value;
   };
   const submitDatHang = () => {
     if (checkCartToPay()) {
@@ -139,7 +144,7 @@ const CartPage = () => {
                 {new Intl.NumberFormat("vi", {
                   currency: "VND",
                   style: "currency",
-                }).format(totalBill.current)}
+                }).format(showTotal())}
               </strong>
             </button>
           </div>

@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { updateCart } from "../../redux/cartSlice";
 import SaveCartItem from "../../service/SaveCartItem";
 import { imgAPI_URL } from "../../constants/Config";
+import { useHistory } from "react-router-dom";
 // import ButtonAddToCart from "../../components/buttonAddToCart/buttonAddToCart";
 
 const ProductPage = (props) => {
@@ -16,6 +17,7 @@ const ProductPage = (props) => {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
+  const navi = useHistory();
   const getProductById = (id) => {
     console.log(loading);
     const productId = { _id: id };
@@ -138,7 +140,14 @@ const ProductPage = (props) => {
                       </span>
                     </div>
                     <p className="lead">{product.current.decribtion}</p>
-                    <div className="d-flex">
+                    <div
+                      className="d-flex"
+                      style={{
+                        marginRight: "0 auto",
+                        marginLeft: "0 auto",
+                        maxWidth: "100%",
+                      }}
+                    >
                       <button
                         className="btn btn-dark flex-shrink-0"
                         style={{ margin: "3px" }}
@@ -162,22 +171,32 @@ const ProductPage = (props) => {
                         +
                       </button>
                       {/* <input
-                        className="form-control text-center me-3"
-                        id="inputQuantity"
-                        type="number"
-                        value={quantity}
-                        min={1}
-                        style={{ width: "5rem" }}
-                        onChange={(e) => setQuantity(e.target.value)}
-                      /> */}
-                      <button
-                        className="btn btn-outline-dark flex-shrink-0"
-                        type="button"
-                        onClick={() => addToCart()}
-                      >
-                        <i className="bi-cart-fill me-1"></i>
-                        Thêm vào giỏ hàng
-                      </button>
+                          className="form-control text-center me-3"
+                          id="inputQuantity"
+                          type="number"
+                          value={quantity}
+                          min={1}
+                          style={{ width: "5rem" }}
+                          onChange={(e) => setQuantity(e.target.value)}
+                        /> */}
+                      {product.current.quantity < 1 ? (
+                        <button
+                          className="btn btn-warning flex-shrink-0"
+                          type="button"
+                        >
+                          <i className="bi-cart-fill me-1"></i>
+                          Hết hàng
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-outline-dark flex-shrink-0"
+                          type="button"
+                          onClick={() => addToCart()}
+                        >
+                          <i className="bi-cart-fill me-1"></i>
+                          Thêm vào giỏ hàng
+                        </button>
+                      )}
                       {/* <ButtonAddToCart addToCart={addToCart} /> */}
                     </div>
                   </div>
