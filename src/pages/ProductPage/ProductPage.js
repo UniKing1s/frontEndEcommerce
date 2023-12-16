@@ -179,7 +179,8 @@ const ProductPage = (props) => {
                           style={{ width: "5rem" }}
                           onChange={(e) => setQuantity(e.target.value)}
                         /> */}
-                      {product.current.quantity < 1 ? (
+                      {product.current.quantity < 1 ||
+                      product.current.status === "hết hàng" ? (
                         <button
                           className="btn btn-warning flex-shrink-0"
                           type="button"
